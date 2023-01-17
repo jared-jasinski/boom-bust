@@ -8,7 +8,6 @@ if __name__ == '__main__':
     total_buys = 0
     total_sells = 0
     block = 0
-    circ_supply = 0
     day = 1
     years_full_population = 750
     starting_cost_per_token = 0.01
@@ -24,7 +23,7 @@ if __name__ == '__main__':
     buy_queue = []
     sell_queue = []
 
-    while day < 750:
+    while day < 333:
 
         # add block rewards to the circulating supply
         for x in range(blocks_daily):
@@ -62,10 +61,9 @@ if __name__ == '__main__':
             new = Holder()
             buy_queue.append(new)
             holders.append(new)
-
-        day += 1
         x_axis.append(day)
         y_axis.append(lp.value)
+        day += 1
         print("day: {} | value: {} | circ_supply: {} | supply: {} | holders: {} | buys: {} | sells: {} "
               .format(day, lp.value, lp.circ_supply, lp.supply, len(holders), total_buys, total_sells))
 

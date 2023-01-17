@@ -34,12 +34,16 @@ class Pool:
         # print(amount_to_buy)
 
     def sell_to_pool(self, holder):
-        amount_to_sell = 0.4 * holder.holdings
+        amount_to_sell = 0.5 * holder.holdings
         holder.update(-1*amount_to_sell, self.value)
+        holder.add_day()
 
         self.value = self.value * self.circ_supply / (self.circ_supply + amount_to_sell)
 
         self.circ_supply += amount_to_sell
+
+    def do_nothing(self):
+        self.add_day()
 
     def add(self, reward):
         self.circ_supply += reward
