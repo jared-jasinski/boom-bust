@@ -1,6 +1,7 @@
 from holder import Holder
 from blockchain import block_reward
 from liq_pool import Pool
+from trends import Trend
 import math
 import matplotlib.pyplot as plt
 
@@ -8,7 +9,7 @@ if __name__ == '__main__':
     total_buys = 0
     total_sells = 0
     block = 0
-    day = 1
+    day = 0
     years_full_population = 750
     starting_cost_per_token = 0.01
     blocks_daily = 144
@@ -19,6 +20,7 @@ if __name__ == '__main__':
 
     starting_supply = block_reward(block)
     lp = Pool(starting_cost_per_token, starting_supply)
+    trend = Trend()
 
     buy_queue = []
     sell_queue = []
@@ -64,11 +66,11 @@ if __name__ == '__main__':
         x_axis.append(day)
         y_axis.append(lp.value)
         day += 1
-        print("day: {} | value: {} | circ_supply: {} | supply: {} | holders: {} | buys: {} | sells: {} "
-              .format(day, lp.value, lp.circ_supply, lp.supply, len(holders), total_buys, total_sells))
+        trend.add_daily_stat(day, lp.value, lp.circ_supply, lp.supply, len(holders), total_buys, total_sells)
 
-    plt.plot(x_axis, y_axis)
-    plt.title('Price Vs. Day')
+    print(trend.df)
+    plt.plot(trend.df['value'])
+    plt.title('$USD Vs. Day')
     plt.xlabel('Day')
-    plt.ylabel('Price (USD)')
+    plt.ylabel('$USD')
     plt.show()

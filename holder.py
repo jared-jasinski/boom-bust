@@ -26,12 +26,10 @@ class Holder:
         self.days_hodling += 1
 
     def roll(self):
-        if random.random() < 0.05:
-            # do something 75% of the time
+        if random.random() < 0.5:
             return 'buy'
         else:
-            # do something else 25% of the time
-            return 'sell'    # generate selling chance
+            return 'sell'
     # generate buying chance
     # generate do nothing chance
 
