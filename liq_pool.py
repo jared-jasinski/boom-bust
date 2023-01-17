@@ -20,12 +20,17 @@ class Pool:
         self.USD = value * circ_supply
 
     def buy_from_pool(self, holder):
-        amount_to_buy = self.circ_supply * 0.05 * holder.buying_power
-        cost_basis = [amount_to_buy, self.value]
-        holder.update(cost_basis)
+        amount_to_buy = self.circ_supply * holder.buying_power
+        holder.update(amount_to_buy, self.value)
 
-        self.value = self.market_cap/(self.circ_supply - amount_to_buy)
-
+        self.value = self.market_cap * 0.2 / (self.circ_supply * 0.2 - amount_to_buy)
+        # print(amount_to_buy)
 
     def sell_to_pool(self, param):
         pass
+
+    def add(self, reward):
+        self.circ_supply += reward
+
+    def update(self):
+        self.market_cap = self.circ_supply * self.value

@@ -3,13 +3,13 @@ from blockchain import block_reward
 from liq_pool import Pool
 import math
 
-
 if __name__ == '__main__':
     block = 0
     circ_supply = 0
     day = 1
     years_full_population = 1000
     starting_cost_per_token = 0.30
+    blocks_daily = 144
 
     holders = []
 
@@ -20,6 +20,11 @@ if __name__ == '__main__':
     sell_queue = []
 
     while 1:
+
+        for x in range(blocks_daily):
+            lp.add(block_reward(block))
+            block += 1
+        lp.update()
 
         while buy_queue or sell_queue:
             if buy_queue:
@@ -32,7 +37,9 @@ if __name__ == '__main__':
 
         num_new_holders = int(holder_equation - len(holders))
         for x in range(num_new_holders):
-            new_holder = Holder()
-            buy_queue.append(new_holder)
-            holders.append(new_holder)
+            new = Holder()
+            buy_queue.append(new)
+            holders.append(new)
+
         day += 1
+        print(day, lp.value, lp.circ_supply, len(holders))

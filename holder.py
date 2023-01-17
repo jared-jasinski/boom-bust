@@ -4,20 +4,18 @@ import random
 class Holder:
     transaction = []
 
-    hodl = False
-
     holdings = 0
-    luck = 0
     buying_power = 0
-    hands = 0
-    buy_chance = 0.1
 
     def __init__(self):
-        self.luck = 130 / random.uniform(0, 10)
+        self.transaction = []
+        self.luck = 130 / (random.uniform(0, 20) + 1)
+        self.buying_power = self.luck / 50000
         self.hands = 100
 
-    def update(self, tx):
-        self.transaction.append(tx)
+    def update(self, amount, value):
+        self.transaction.append((amount, value))
+        self.holdings += amount
 
     def unrealized_gains(self, curr_value):
         unrealized_gains = 0
