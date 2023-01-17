@@ -2,6 +2,7 @@ import random
 
 
 class Holder:
+    days_hodling = 0
     transaction = []
 
     holdings = 0
@@ -9,13 +10,21 @@ class Holder:
 
     def __init__(self):
         self.transaction = []
-        self.luck = 130 / (random.uniform(0, 20) + 1)
+        self.luck = 130 / (random.uniform(0, 100) + 1)
         self.buying_power = self.luck / 50000
-        self.hands = 100
 
     def update(self, amount, value):
         self.transaction.append((amount, value))
         self.holdings += amount
+
+    def add_day(self):
+        self.days_hodling += 1
+
+    def roll(self):
+        if random.random() < 0.5:
+            return 'buy'
+        else:
+            return 'sell'
 
     def unrealized_gains(self, curr_value):
         unrealized_gains = 0
