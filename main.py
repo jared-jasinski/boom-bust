@@ -4,6 +4,7 @@ from liq_pool import Pool
 from trends import Trend
 import math
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
 if __name__ == '__main__':
     total_buys = 0
@@ -69,8 +70,23 @@ if __name__ == '__main__':
         trend.add_daily_stat(day, lp.value, lp.circ_supply, lp.supply, len(holders), total_buys, total_sells)
 
     print(trend.df)
-    plt.plot(trend.df['value'])
+
+    fig = plt.figure(figsize=(6, 4))
+    axes = fig.add_subplot(1, 1, 1)
     plt.title('$USD Vs. Day')
     plt.xlabel('Day')
     plt.ylabel('$USD')
+    y1 = list(trend.df['value'])
+
+    y = []
+    max_y = 0
+
+
+    def animate(i):
+        y.append((y1[i]))
+        plt.xlim(0.01, i + 5)
+        plt.plot(y, scaley=True, scalex=True, color="blue")
+
+
+    anim = FuncAnimation(fig, animate, interval=100)
     plt.show()
